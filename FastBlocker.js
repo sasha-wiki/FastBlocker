@@ -55,7 +55,7 @@ function getLastBlocks(username) {
         format: 'json',
         list: 'logevents',
         letype: 'block',
-        title: `User:${username}`,
+        letitle: `User:${username}`,
         lelimit: "3"
     };
     let api = new mw.Api().get(params);
@@ -65,12 +65,12 @@ function getLastBlocks(username) {
         let newList = document.createElement('ul');
         for (let l in logevents) {
             let li = document.createElement('li');
-            let logText = `${logevents.timestamp}: ${logevents.user} blocked for ${logevents.params.duration}.`
+            let logText = `${logevents[l].timestamp}: ${logevents[l].user} blocked for ${logevents[l].params.duration}.`;
             li.appendChild(document.createTextNode(logText));
             newList.appendChild(li);
         }
-        return newList;
-    })
+        return newList.innerHTML;
+    });
 
     return blockInfo;
 }
@@ -97,7 +97,8 @@ function createFormWindow() {
 
     lastBlocks.append({
         type: 'div',
-        name: 'lastBlocks'
+        name: 'lastBlocks',
+        label: 'Sin bloqueos.'
     });
 
     let blockOptions = form.append({
@@ -133,9 +134,9 @@ function createFormWindow() {
     getLastBlocks(username).then(function (apiLastBlocks) {
         let showLastBlocks = document.querySelector("div[name='lastBlocks'] > span.quickformDescription");
         if (apiLastBlocks === false) {
-            showProtection.innerHTML = '<span style="font-weight: bold;">Sin bloqueos.</span>';
+            showLastBlocks.innerHTML = '<span style="font-weight: bold;">Sin bloqueos.</span>';
         } else {
-            showProtection.innerHTML = `${apiLastBlocks}`;
+            showLastBlocks.innerHTML = `${apiLastBlocks}`;
         }
     });
 }
