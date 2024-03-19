@@ -50,7 +50,7 @@ function getUsername(element) {
 }
 
 function getLastBlocks(username) {
-    return
+    return;
 }
 
 function getOptions(list) {
@@ -76,7 +76,7 @@ function createFormWindow() {
     lastBlocks.append({
         type: 'div',
         name: 'lastBlocks'
-    })
+    });
 
     let blockOptions = form.append({
 		type: 'field',
@@ -111,7 +111,7 @@ function createFormWindow() {
     getLastBlocks(username).then(function (apiLastBlocks) {
         let showLastBlocks = document.querySelector("div[name='lastBlocks'] > span.quickformDescription");
         if (apiLastBlocks === false) {
-            showProtection.innerHTML = <span style="font-weight: bold;">Sin bloqueos.</span>;
+            showProtection.innerHTML = '<span style="font-weight: bold;">Sin bloqueos.</span>;'
         } else {
             showProtection.innerHTML = `${apiLastBlocks}`;
         }
