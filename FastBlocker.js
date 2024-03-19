@@ -49,6 +49,10 @@ function getUsername(element) {
     return username.trim();
 }
 
+function getLastBlocks(username) {
+    return
+}
+
 function getOptions(list) {
 	let dropDownOptions = [];
 	for (let a of list) {
@@ -64,9 +68,19 @@ function createFormWindow() {
     Window.setTitle(`Bloquear a ${username}`);
     let form = new Morebits.quickForm(submitBlock);
 
+    let lastBlocks = form.append({
+       type: 'field',
+       label: 'Últimos bloqueos:' 
+    });
+
+    lastBlocks.append({
+        type: 'div',
+        name: 'lastBlocks'
+    })
+
     let blockOptions = form.append({
 		type: 'field',
-		label: 'Opciones:',
+		label: 'Opciones:'
 	});
 
 	blockOptions.append({
@@ -93,6 +107,15 @@ function createFormWindow() {
 	let result = form.render();
 	Window.setContent(result);
 	Window.display();
+
+    getLastBlocks(username).then(function (apiLastBlocks) {
+        let showLastBlocks = document.querySelector("div[name='lastBlocks'] > span.quickformDescription");
+        if (apiLastBlocks === false) {
+            showProtection.innerHTML = <span style="font-weight: bold;">Sin bloqueos.</span>;
+        } else {
+            showProtection.innerHTML = `${apiLastBlocks}`;
+        }
+    })
 }
 
 function submitBlock(e) {
