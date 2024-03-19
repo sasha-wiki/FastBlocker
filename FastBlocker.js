@@ -105,7 +105,9 @@ function submitBlock(e) {
         reason: input.motive,
         nocreate: true,
         autoblock: true,
+        allowusertalk: true,
         anononly: true,
+        reblock: true
     }).then(function() {
         mw.notify(`${username} ha sido bloqueado.`);
     });
