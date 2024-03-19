@@ -50,7 +50,29 @@ function getUsername(element) {
 }
 
 function getLastBlocks(username) {
-    return;
+    let params = {
+        action: 'query',
+        format: 'json',
+        list: 'logevents',
+        letype: 'block',
+        title: `User:${username}`,
+        lelimit: "3"
+    };
+    let api = new mw.Api().get(params);
+    let blockInfo = api.then(function (data){
+        console.log(data);
+        let logevents = data.query.logevents;
+        let newList = document.createElement('ul');
+        for (let l in logevents) {
+            let li = document.createElement('li');
+            let logText = `${logevents.timestamp}: ${logevents.user} blocked for ${logevents.params.duration}.`
+            li.appendChild(document.createTextNode(logText));
+            newList.appendChild(li);
+        }
+        return newList;
+    })
+
+    return blockInfo;
 }
 
 function getOptions(list) {
@@ -111,11 +133,11 @@ function createFormWindow() {
     getLastBlocks(username).then(function (apiLastBlocks) {
         let showLastBlocks = document.querySelector("div[name='lastBlocks'] > span.quickformDescription");
         if (apiLastBlocks === false) {
-            showProtection.innerHTML = '<span style="font-weight: bold;">Sin bloqueos.</span>;'
+            showProtection.innerHTML = '<span style="font-weight: bold;">Sin bloqueos.</span>';
         } else {
             showProtection.innerHTML = `${apiLastBlocks}`;
         }
-    })
+    });
 }
 
 function submitBlock(e) {
