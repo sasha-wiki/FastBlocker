@@ -1,2 +1,0 @@
-// Localization to Spanish module
-
