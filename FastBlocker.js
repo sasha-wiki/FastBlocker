@@ -4,6 +4,7 @@ let username;
 const listMotiveOptions = [
     { name: 'Vandalismo de páginas', value: '[[WP:VN|Vandalismo de páginas]]' },
     { name: 'Cuenta creada para vandalizar', value: '[[WP:VN|Cuenta creada para vandalizar]]' },
+    { name: 'Vandalismo impedido por el filtro antiabusos', value: '[[WP:VN|Reiteradas ediciones problemáticas o vandálicas frustradas por el filtro antiabusos]]'},
     { name: 'CPP', value: '[[WP:CPP|Cuenta con propósito particular]]' },
     { name: 'Nombre de usuario inapropiado', value: '[[WP:NU|Viola la política de nombres de usuario]]' },
     { name: 'Usuario títere', value: '[[WP:UT#Situaciones de prohibición|Abuso de múltiples cuentas y/o evasión de bloqueo local o global]]' },
