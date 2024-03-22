@@ -45,14 +45,12 @@ const timeDictionary = {
     years: 'años',
     decade: 'década',
     decades: 'décadas',
-    never: 'para siempre',
-    infinite: 'para siempre',
-    indefinite: 'para siempre',
-    infinity: 'para siempre',
-    forever: 'para siempre'
 };
 
 function translateDuration(duration) {
+    if (/(indefinite|infinity|forever|infinite|never)/.test(duration)) {
+        return 'para siempre';
+    }
     if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(duration)) {
         return 'hasta el ' + parseTimestamp(duration);
     }
@@ -62,7 +60,7 @@ function translateDuration(duration) {
             continue;
         }
         if (timeDictionary[durationArray[word]]) {
-            [durationArray[word]] = timeDictionary[durationArray[word]];
+            durationArray[word] = timeDictionary[durationArray[word]];
         }
         return 'por ' + durationArray.join(' ');
     }
@@ -122,6 +120,9 @@ function getLastBlocks(username) {
     let blockInfo = api.then(function (data) {
         console.log(data);
         let logevents = data.query.logevents;
+        if logevents.length === 0 {
+            return 'No constan bloqueos.'
+        }
         let newList = document.createElement('ul');
         for (let l in logevents) {
             let li = document.createElement('li');
@@ -160,7 +161,7 @@ function createFormWindow() {
         type: 'div',
         name: 'lastBlocks',
         label: 'Cargando...'
-        style: 'margin-left: 1.5em'
+        style: 'margin-left: 1em'
     });
 
     let blockOptions = form.append({
