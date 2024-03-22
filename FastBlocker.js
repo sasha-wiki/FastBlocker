@@ -43,7 +43,12 @@ const timeDictionary = {
     year: 'año',
     years: 'años',
     decade: 'década',
-    decades: 'décadas'
+    decades: 'décadas',
+    never: 'para siempre',
+    infinite: 'para siempre',
+    indefinite: 'para siempre',
+    infinity: 'para siempre',
+    forever: 'para siempre'
 };
 
 function translateDuration(duration) {
