@@ -125,7 +125,7 @@ function getLastBlocks(username) {
         for (let l in logevents) {
             let li = document.createElement('li');
             let logTextWithoutMotive = translateBlockLog(logevents[l].timestamp, logevents[l].action, logevents[l].user, logevents[l].params.duration);
-            let logText = logTextWithoutMotive + logevents[l].comment;
+            let logText = logTextWithoutMotive + '(' + logevents[l].comment + ')';
             li.appendChild(document.createTextNode(logText));
             newList.appendChild(li);
         }
@@ -158,7 +158,8 @@ function createFormWindow() {
     lastBlocks.append({
         type: 'div',
         name: 'lastBlocks',
-        label: 'Sin bloqueos.'
+        label: 'Cargando...'
+        style: 'margin-left: 1.5em'
     });
 
     let blockOptions = form.append({
