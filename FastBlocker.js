@@ -32,6 +32,7 @@ const timeDictionary = {
     seconds: 'segundos',
     minute: 'minuto',
     minutes: 'minutos',
+    h: 'horas',
     hour: 'hora',
     hours: 'horas',
     day: 'día',
