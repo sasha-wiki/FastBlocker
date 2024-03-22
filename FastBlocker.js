@@ -1,5 +1,3 @@
-import * as l10n from "./l10n";
-
 const namespace = mw.config.get('wgCanonicalSpecialPageName');
 let username;
 
@@ -28,6 +26,59 @@ const listDurationOptions = [
     { name: '1 año', value: '1 year' },
     { name: '2 años', value: '2 years' }
 ];
+
+const timeDictionary = {
+    second: 'segundo',
+    seconds: 'segundos',
+    minute: 'minuto',
+    minutes: 'minutos',
+    hour: 'hora',
+    hours: 'horas',
+    day: 'día',
+    days: 'días',
+    week: 'semana',
+    weeks: 'semanas',
+    month: 'mes',
+    months: 'meses',
+    year: 'año',
+    years: 'años',
+    decade: 'década',
+    decades: 'décadas'
+};
+
+function translateDuration(duration) {
+    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(duration)) {
+        return 'hasta el ' + parseTimestamp(duration);
+    };
+    let durationArray = duration.split(' ');
+    for (let word in durationArray) {
+        if (/\d+/.test(durationArray[word])) {
+            continue;
+        };
+        if (timeDictionary[durationArray[word]]) {
+            [durationArray[word]] = timeDictionary[durationArray[word]];
+        };
+        return durationArray.join(' ');
+    };
+}
+
+function parseTimestamp(timestamp) {
+    let date = new Date(timestamp);
+    return date.toLocaleDateString('es-ES');
+}
+
+
+function translateBlockLog (timestamp, action, user, duration) {
+    let marcaDeTiempo, duracion;
+
+    marcaDeTiempo = parseTimestamp(timestamp);
+    if (action === 'unblock') {
+        return `${marcaDeTiempo}: Fue desbloqueado por ${user}. `;
+    };
+    duracion = translateDuration(duration);
+
+    return `${marcaDeTiempo}: Fue bloqueado por ${user} ${tiempo}. `;
+}
 
 function getUsername(element) {
     // global namespace
