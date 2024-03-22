@@ -49,17 +49,17 @@ const timeDictionary = {
 function translateDuration(duration) {
     if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(duration)) {
         return 'hasta el ' + parseTimestamp(duration);
-    };
+    }
     let durationArray = duration.split(' ');
     for (let word in durationArray) {
         if (/\d+/.test(durationArray[word])) {
             continue;
-        };
+        }
         if (timeDictionary[durationArray[word]]) {
             [durationArray[word]] = timeDictionary[durationArray[word]];
-        };
-        return durationArray.join(' ');
-    };
+        }
+        return 'por ' + durationArray.join(' ');
+    }
 }
 
 function parseTimestamp(timestamp) {
@@ -74,10 +74,10 @@ function translateBlockLog (timestamp, action, user, duration) {
     marcaDeTiempo = parseTimestamp(timestamp);
     if (action === 'unblock') {
         return `${marcaDeTiempo}: Fue desbloqueado por ${user}. `;
-    };
+    }
     duracion = translateDuration(duration);
 
-    return `${marcaDeTiempo}: Fue bloqueado por ${user} ${tiempo}. `;
+    return `${marcaDeTiempo}: Fue bloqueado por ${user} ${duracion}. `;
 }
 
 function getUsername(element) {
@@ -119,7 +119,7 @@ function getLastBlocks(username) {
         let newList = document.createElement('ul');
         for (let l in logevents) {
             let li = document.createElement('li');
-            let logTextWithoutMotive = l10.translateBlockLog(logevents[l].timestamp, logevents[l].action, logevents[l].user, logevents[l].params.duration);
+            let logTextWithoutMotive = translateBlockLog(logevents[l].timestamp, logevents[l].action, logevents[l].user, logevents[l].params.duration);
             let logText = logTextWithoutMotive + logevents[l].comment;
             li.appendChild(document.createTextNode(logText));
             newList.appendChild(li);
