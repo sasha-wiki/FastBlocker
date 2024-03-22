@@ -1,3 +1,5 @@
+import * as l10n from "./l10n";
+
 const namespace = mw.config.get('wgCanonicalSpecialPageName');
 let username;
 
@@ -66,7 +68,8 @@ function getLastBlocks(username) {
         let newList = document.createElement('ul');
         for (let l in logevents) {
             let li = document.createElement('li');
-            let logText = `${logevents[l].timestamp}: ${logevents[l].user} blocked for ${logevents[l].params.duration}.`;
+            let logTextWithoutMotive = l10.translateBlockLog(logevents[l].timestamp, logevents[l].action, logevents[l].user, logevents[l].params.duration);
+            let logText = logTextWithoutMotive + logevents[l].comment;
             li.appendChild(document.createTextNode(logText));
             newList.appendChild(li);
         }
