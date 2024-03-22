@@ -120,8 +120,8 @@ function getLastBlocks(username) {
     let blockInfo = api.then(function (data) {
         console.log(data);
         let logevents = data.query.logevents;
-        if logevents.length === 0 {
-            return 'No constan bloqueos.'
+        if (logevents.length === 0) {
+            return 'No constan bloqueos.';
         }
         let newList = document.createElement('ul');
         for (let l in logevents) {
@@ -160,7 +160,7 @@ function createFormWindow() {
     lastBlocks.append({
         type: 'div',
         name: 'lastBlocks',
-        label: 'Cargando...'
+        label: 'Cargando...',
         style: 'margin-left: 1em'
     });
 
