@@ -69,7 +69,7 @@ function translateDuration(duration) {
 
 function parseTimestamp(timestamp) {
     let date = new Date(timestamp);
-    return date.toLocaleDateString('es-ES');
+    return date.toLocaleTimeString('es-ES') + ' ' + date.toLocaleDateString('es-ES');
 }
 
 
