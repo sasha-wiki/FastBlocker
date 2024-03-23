@@ -1,4 +1,3 @@
-const namespace = mw.config.get('wgCanonicalSpecialPageName');
 let username;
 
 const listMotiveOptions = [
@@ -82,29 +81,6 @@ function translateBlockLog (timestamp, action, user, duration) {
     duracion = translateDuration(duration);
 
     return `${marcaDeTiempo}: Fue bloqueado por ${user} ${duracion}. `;
-}
-
-function getUsername(element) {
-    // global namespace
-    let username;
-    try {
-        username = element
-            .parent()
-            .get(0)
-            .previousElementSibling
-            .textContent;
-    } catch (e) {
-        if (e instanceof TypeError && namespace === 'Watchlist') {
-            username = element
-                .parents()
-                .siblings('.mw-changeslist-line-inner-userLink')
-                .find('.mw-userlink')
-                .text();
-        } else {
-            console.log(e);
-        }
-    }
-    return username.trim();
 }
 
 function getLastBlocks(username) {
@@ -223,18 +199,25 @@ function submitBlock(e) {
 }
 
 function createUserToolButton() {
-    mw.hook('wikipage.content').add(function (obj) {
-        obj.find('span.mw-usertoollinks').each(function (idx, element) {
-            $(element).contents().last().after(' · ',
-                $('<a>').attr('href', '#!')
-                    .text('bloqueo rápido')
-                    .click(function () {
-                        username = getUsername($(this));
-                        createFormWindow();
-                    })
-            );
-        });
-    });
+    const usersNodeList = document.querySelectorAll('span.mw-usertoollinks');
+    usersNodeList.forEach(
+        (element) => {
+        	if (element.parentElement.querySelector('a.extiw')) {
+        		return;
+        	}
+            const newElement = document.createElement('span');
+            newElement.textContent = mw.config.get('wgDiffOldId') ? ' · ' : '';
+            const elementChild = document.createElement('a');
+            elementChild.id = 'block-button';
+            elementChild.textContent = 'bloqueo rápido';
+            elementChild.addEventListener('click', () => {
+                username = element.parentElement.querySelector('a.mw-userlink').innerText;
+                createFormWindow();
+            });
+            newElement.append(elementChild);
+            element.append(newElement);
+        }
+    );
 }
 
 const loadDependencies = (callback) => {
