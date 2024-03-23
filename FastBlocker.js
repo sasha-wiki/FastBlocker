@@ -161,6 +161,19 @@ function createFormWindow() {
         disabled: false
     });
 
+    if (/^(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}$/.test(username)) {
+        form.append({
+            type: 'checkbox',
+            list: [{
+                name: '/64',
+                value: '/64',
+                label: 'Bloquear /64',
+                checked: true
+            }]
+            style = "padding-left: 1em; padding-top:0.5em;"
+        })
+    }
+
     form.append({
         type: 'submit',
         label: 'Aceptar'
@@ -183,6 +196,9 @@ function createFormWindow() {
 function submitBlock(e) {
     let form = e.target;
     let input = Morebits.quickForm.getInputData(form);
+    if (input./64) {
+        username = username + '/64';
+    }
     new mw.Api().postWithToken('csrf', {
         action: 'block',
         user: username,
