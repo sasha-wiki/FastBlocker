@@ -170,6 +170,7 @@ function createFormWindow() {
                 label: 'Bloquear /64',
                 checked: true
             }],
+            style: "padding-left: 1em;"
         });
     }
 
@@ -214,24 +215,21 @@ function submitBlock(e) {
 }
 
 function createUserToolButton() {
-    const usersNodeList = document.querySelectorAll('span.mw-usertoollinks');
+    const usersNodeList = document.querySelectorAll('a.mw-usertoollinks-block');
     usersNodeList.forEach(
         (element) => {
-        	if (element.parentElement.querySelector('a.extiw')) {
-        		return;
-        	}
             const newElement = document.createElement('span');
-            newElement.textContent = mw.config.get('wgDiffOldId') || mw.config.get('wgPageName') == "Especial:PáginasNuevas" || mw.config.get('wgPageName') == "Especial:RegistroAbusos" ? ' · ' : '';
+            newElement.textContent = ' · ';
             const elementChild = document.createElement('a');
             elementChild.id = 'block-button';
-            elementChild.style.color = 'teal';
+            elementChild.style.color = 'red';
             elementChild.textContent = 'bloqueo rápido';
             elementChild.addEventListener('click', () => {
-                username = element.parentElement.querySelector('a.mw-userlink').innerText;
+                username = element.title.substring(18);
                 createFormWindow();
             });
             newElement.append(elementChild);
-            element.append(newElement);
+            element.parentNode.insertBefore(newElement, element.nextSibling);
         }
     );
 }
