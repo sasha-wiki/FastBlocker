@@ -224,6 +224,7 @@ function createUserToolButton() {
             newElement.textContent = mw.config.get('wgDiffOldId') || mw.config.get('wgPageName') == "Especial:PáginasNuevas" ? ' · ' : '';
             const elementChild = document.createElement('a');
             elementChild.id = 'block-button';
+            elementChild.style.color = 'teal';
             elementChild.textContent = 'bloqueo rápido';
             elementChild.addEventListener('click', () => {
                 username = element.parentElement.querySelector('a.mw-userlink').innerText;
