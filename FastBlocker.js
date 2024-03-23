@@ -222,7 +222,7 @@ function createUserToolButton() {
         		return;
         	}
             const newElement = document.createElement('span');
-            newElement.textContent = mw.config.get('wgDiffOldId') ? ' · ' : '';
+            newElement.textContent = mw.config.get('wgDiffOldId') || currentPageName == "Especial:PáginasNuevas" ? ' · ' : '';
             const elementChild = document.createElement('a');
             elementChild.id = 'block-button';
             elementChild.textContent = 'bloqueo rápido';
