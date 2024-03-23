@@ -162,7 +162,7 @@ function createFormWindow() {
     });
 
     if (/^(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}$/.test(username)) {
-        form.append({
+        blockOptions.append({
             type: 'checkbox',
             list: [{
                 name: '/64',
@@ -170,7 +170,7 @@ function createFormWindow() {
                 label: 'Bloquear /64',
                 checked: true
             }],
-            style: "padding-left: 1em; padding-top:0.5em;"
+            style: "padding-left: 1em;"
         });
     }
 
