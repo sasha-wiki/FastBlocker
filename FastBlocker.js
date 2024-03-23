@@ -50,7 +50,7 @@ function translateDuration(duration) {
     if (/(indefinite|infinity|forever|infinite|never)/.test(duration)) {
         return 'para siempre';
     }
-    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(duration)) {
+    if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(duration)) {
         return 'hasta el ' + parseTimestamp(duration);
     }
     let durationArray = duration.split(' ');
