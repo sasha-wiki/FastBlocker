@@ -170,7 +170,6 @@ function createFormWindow() {
                 label: 'Bloquear /64',
                 checked: true
             }],
-            style: "padding-left: 1em;"
         });
     }
 
