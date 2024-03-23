@@ -171,7 +171,7 @@ function createFormWindow() {
                 checked: true
             }],
             style: "padding-left: 1em; padding-top:0.5em;"
-        })
+        });
     }
 
     form.append({
@@ -222,7 +222,7 @@ function createUserToolButton() {
         		return;
         	}
             const newElement = document.createElement('span');
-            newElement.textContent = mw.config.get('wgDiffOldId') || currentPageName == "Especial:PáginasNuevas" ? ' · ' : '';
+            newElement.textContent = mw.config.get('wgDiffOldId') || mw.config.get('wgPageName') == "Especial:PáginasNuevas" ? ' · ' : '';
             const elementChild = document.createElement('a');
             elementChild.id = 'block-button';
             elementChild.textContent = 'bloqueo rápido';
