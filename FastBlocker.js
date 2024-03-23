@@ -221,7 +221,7 @@ function createUserToolButton() {
         		return;
         	}
             const newElement = document.createElement('span');
-            newElement.textContent = mw.config.get('wgDiffOldId') || mw.config.get('wgPageName') == "Especial:PáginasNuevas" ? ' · ' : '';
+            newElement.textContent = mw.config.get('wgDiffOldId') || mw.config.get('wgPageName') == "Especial:PáginasNuevas" || mw.config.get('wgPageName') == "Especial:RegistroAbusos" ? ' · ' : '';
             const elementChild = document.createElement('a');
             elementChild.id = 'block-button';
             elementChild.style.color = 'teal';
