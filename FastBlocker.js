@@ -122,10 +122,17 @@ function getOptions(list) {
     return dropDownOptions;
 }
 
+function modifyFooterLink() {
+    document.querySelector('span.morebits-dialog-footerlinks>a').href = `https://es.wikipedia.org/w/index.php?title=Especial:Registro&page=${username}&type=block`;
+}
+
 function createFormWindow() {
     let Window = new Morebits.simpleWindow(620, 530);
     Window.setScriptName('FastBlocker');
     Window.setTitle(`Bloquear a ${username}`);
+    Window.addFooterLink('Registro completo de bloqueos del usuario', '');
+    modifyFooterLink();
+	
     let form = new Morebits.quickForm(submitBlock);
 
     let lastBlocks = form.append({
