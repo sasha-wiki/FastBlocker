@@ -170,7 +170,6 @@ function createFormWindow() {
                 label: 'Bloquear /64',
                 checked: true
             }],
-            style: "padding-left: 1em;"
         });
     }
 
@@ -197,7 +196,7 @@ function submitBlock(e) {
     let form = e.target;
     let input = Morebits.quickForm.getInputData(form);
     if (input.sixtyfour) {
-        username = username + '/64';
+        username = ip.get64(username);
     }
     new mw.Api().postWithToken('csrf', {
         action: 'block',
@@ -215,23 +214,23 @@ function submitBlock(e) {
 }
 
 function createUserToolButton() {
-    const usersNodeList = document.querySelectorAll('a.mw-usertoollinks-block');
-    usersNodeList.forEach(
-        (element) => {
-            const newElement = document.createElement('span');
-            newElement.textContent = ' · ';
-            const elementChild = document.createElement('a');
-            elementChild.id = 'block-button';
-            elementChild.style.color = 'red';
-            elementChild.textContent = 'bloqueo rápido';
-            elementChild.addEventListener('click', () => {
-                username = element.title.substring(18);
-                createFormWindow();
-            });
-            newElement.append(elementChild);
-            element.parentNode.insertBefore(newElement, element.nextSibling);
-        }
-    );
+	mw.hook('wikipage.content').add(function(obj) {
+	    obj.find('a.mw-usertoollinks-block').each(function(idx, element) {
+	            const newElement = document.createElement('span');
+	            newElement.textContent = ' · ';
+	            newElement.className = 'fast-blocker';
+	            const elementChild = document.createElement('a');
+	            elementChild.id = 'block-button';
+	            elementChild.style.color = 'red';
+	            elementChild.textContent = 'bloqueo rápido';
+	            elementChild.addEventListener('click', () => {
+	                username = element.title.substring(18);
+	                createFormWindow();
+	            });
+	            newElement.append(elementChild);
+	            element.parentNode.insertBefore(newElement, element.nextSibling);
+        });
+	});
 }
 
 const loadDependencies = (callback) => {
