@@ -172,9 +172,8 @@ function createFormWindow() {
         blockOptions.append({
             type: 'checkbox',
             list: [{
-                name: '/64',
-                value: 'sixtyfour',
-                label: 'Bloquear /64',
+                name: 'sixtyfour',
+				label: 'Bloquear /64',
                 checked: true
             }],
         });
@@ -202,8 +201,8 @@ function createFormWindow() {
 function submitBlock(e) {
     let form = e.target;
     let input = Morebits.quickForm.getInputData(form);
-    if (input.sixtyfour) {
-        username = ip.get64(username);
+    if (input.sixtyfour === true) {
+        username = Morebits.ip.get64(username);
     }
     new mw.Api().postWithToken('csrf', {
         action: 'block',
